@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B2 Grammar Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #f0f8ff, #e0ffff);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .quiz-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      max-width: 700px;
+      width: 90%;
+      text-align: left;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #0077b6;
+      border-radius: 5px;
+      background-color: #caf0f8;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .options button:hover {
+      background-color: #90e0ef;
+    }
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .navigation button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #0077b6;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .navigation button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>B2 Grammar Quiz</h1>
+    <div id="quiz">
+      <!-- Question slides will be generated here -->
+    </div>
+    <div class="navigation">
+      <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+      <button id="nextBtn" onclick="nextQuestion()">Next</button>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Q1: Which sentence is in the Present Simple?",
+        options: ["She goes to the gym every morning.", "She is going to the gym right now.", "She went to the gym yesterday.", "She was going to the gym when I called."],
+        answer: 0
+      },
+      {
+        question: "Q2: Complete: 'They usually ___ (take) the bus to school.'",
+        options: ["takes", "taking", "take", "are taking"],
+        answer: 2
+      },
+      {
+        question: "Q3: Which is a habit?",
+        options: ["I watch TV every night.", "I am watching TV now.", "I watched TV yesterday.", "I was watching TV when you called."],
+        answer: 0
+      },
+      // ... continue with all 55 questions here ...
+      {
+        question: "Q55: Which sentence shows a habit?",
+        options: ["I was eating dinner when you arrived.", "I eat dinner at 7 p.m. every day.", "I am eating dinner now.", "I ate dinner yesterday."],
+        answer: 1
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function showQuestion() {
+      const quizDiv = document.getElementById('quiz');
+      const q = quizData[currentQuestion];
+      quizDiv.innerHTML = `
+        <div class="question">${q.question}</div>
+        <div class="options">
+          ${q.options.map((opt, index) => `<button onclick="checkAnswer(${index})">${opt}</button>`).join('')}
+        </div>
+        <div class="feedback" id="feedback"></div>
+      `;
+      document.getElementById('prevBtn').disabled = currentQuestion === 0;
+      document.getElementById('nextBtn').disabled = currentQuestion === quizData.length - 1;
+    }
+
+    function checkAnswer(selected) {
+      const feedback = document.getElementById('feedback');
+      const correct = quizData[currentQuestion].answer;
+      if (selected === correct) {
+        feedback.textContent = "✅ Correct!";
+        feedback.style.color = "green";
+        score++;
+      } else {
+        feedback.textContent = `❌ Incorrect! Correct answer: ${quizData[currentQuestion].options[correct]}`;
+        feedback.style.color = "red";
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        showQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion();
+      }
+    }
+
+    function showResults() {
+      const quizDiv = document.getElementById('quiz');
+      quizDiv.innerHTML = `
+        <h2>🎉 Quiz Completed!</h2>
+        <p>Your Score: ${score} / ${quizData.length}</p>
+        <p>Refresh the page to try again.</p>
+      `;
+      document.getElementById('prevBtn').style.display = "none";
+      document.getElementById('nextBtn').style.display = "none";
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
+# English Tenses Quick Reference Table
+
+| Tense | Formation | Usage | Spelling Rules | Example |
+|-------|-----------|--------|----------------|----------|
+| **Simple Present** | Base verb + s/es (3rd person) | • Habits<br>• Facts<br>• General truths | • Add -s: play → plays<br>• Add -es after s, ss, sh, ch, x, z, o<br>• y → ies after consonant | "Sarah plays tennis every weekend." |
+| **Present Continuous** | am/is/are + verb-ing | • Actions happening now<br>• Temporary actions<br>• Future arrangements | • Drop final -e: write → writing<br>• Double consonant after stressed CVC: run → running<br>• ie → y: lie → lying | "They are studying for their final exams right now." |
+| **Simple Past** | verb-ed / irregular past form | • Completed actions in the past<br>• Sequential past actions | • Add -d after -e: like → liked<br>• Double consonant + ed after stressed CVC<br>• y → ied after consonant | "Last summer, we traveled to Spain." |
+| **Past Continuous** | was/were + verb-ing | • Past actions in progress<br>• Interrupted actions<br>• Parallel past actions | Same as Present Continuous | "While I was cooking dinner, the phone rang." |
+| **Present Perfect** | have/has + past participle | • Past actions with present relevance<br>• Experience up to now<br>• Recently completed actions | • Regular: same as Simple Past<br>• Irregular verbs have unique forms | "I have lived in London for five years." |
+| **Present Perfect Continuous** | have/has been + verb-ing | • Ongoing actions from past to present<br>• Emphasis on duration | Same as Present Continuous | "She has been teaching English since 2010." |
+| **Past Perfect** | had + past participle | • Actions before another past action<br>• Reported speech | Same as Present Perfect | "When I arrived at the party, everyone had already left." |
+| **Past Perfect Continuous** | had been + verb-ing | • Ongoing past actions before another past action<br>• Past duration before a point | Same as Present Continuous | "They had been dating for three years before they got married." |
+| **Future (will)** | will + base verb | • Predictions<br>• Promises<br>• Spontaneous decisions | No spelling changes | "I will help you with your project." |
+| **Future (going to)** | am/is/are going to + base verb | • Planned future actions<br>• Predictions based on evidence | No spelling changes | "We are going to buy a new house next month." |
+| **Future Continuous** | will be + verb-ing | • Future actions in progress<br>• Predicted future activities | Same as Present Continuous | "This time next week, I will be flying to New York." |
+| **Future Perfect** | will have + past participle | • Future actions completed before a specific time | Same as Present Perfect | "By next June, I will have graduated from university." |
+
+## Question Forms
+| Tense | Question Formation | Example |
+|-------|-------------------|----------|
+| Simple Present | Do/Does + subject + base verb | "Does she play professionally?" |
+| Present Continuous | Am/Is/Are + subject + verb-ing | "What are you doing?" |
+| Simple Past | Did + subject + base verb | "Did you enjoy the trip?" |
+| Past Continuous | Was/Were + subject + verb-ing | "What were you doing at 8 PM?" |
+| Present Perfect | Have/Has + subject + past participle | "Have you ever visited Paris?" |
+| Present Perfect Continuous | Have/Has + subject + been + verb-ing | "How long have you been waiting?" |
+| Past Perfect | Had + subject + past participle | "Had you finished your homework?" |
+| Past Perfect Continuous | Had + subject + been + verb-ing | "How long had you been working there?" |
+| Future (will) | Will + subject + base verb | "Will you attend the meeting tomorrow?" |
+| Future (going to) | Am/Is/Are + subject + going to + base verb | "Are you going to join us?" |
+| Future Continuous | Will + subject + be + verb-ing | "Will you be working late?" |
+| Future Perfect | Will + subject + have + past participle | "Will you have finished by then?" |
+
+## Key Time Expressions
+| Tense | Common Time Expressions |
+|-------|------------------------|
+| Simple Present | always, usually, often, sometimes, never, every day/week/month |
+| Present Continuous | now, at the moment, currently, these days |
+| Simple Past | yesterday, last week/month/year, ago, in 2020 |
+| Past Continuous | while, when, at that moment |
+| Present Perfect | ever, never, already, yet, just, since, for |
+| Present Perfect Continuous | for, since, all day/week, how long |
+| Past Perfect | before, after, by the time, already |
+| Future | tomorrow, next week/month/year, in the future |
